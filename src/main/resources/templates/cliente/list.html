@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Listagem de Clientes</title>
+
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="container mt-4">
+
+    <h1>Clientes</h1>
+
+    <a class="btn btn-primary mb-3"
+       th:href="@{/cliente/novo}">
+        Novo Cliente
+    </a>
+
+    <table class="table table-bordered table-striped">
+
+        <thead class="table-dark">
+        <tr>
+            <th>Nome</th>
+            <th>E-mail</th>
+            <th>Telefone</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        <tr th:each="cliente : ${clientes}">
+
+            <td th:text="${cliente.nome}"></td>
+
+            <td th:text="${cliente.email}"></td>
+
+            <td th:text="${cliente.telefone}"></td>
+
+            <td>
+
+                <a class="btn btn-sm btn-warning"
+                   th:href="@{/cliente/edit/{id}(id=${cliente.id})}">
+                    Editar
+                </a>
+
+                <a class="btn btn-sm btn-danger"
+                   th:href="@{/cliente/delete/{id}(id=${cliente.id})}">
+                    Excluir
+                </a>
+
+            </td>
+
+        </tr>
+
+        </tbody>
+
+    </table>
+
+</div>
+
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+
+</body>
+</html>

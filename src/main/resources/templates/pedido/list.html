@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-br"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Listagem de Pedidos</title>
+
+    <link
+        th:href="@{/css/bootstrap.min.css}"
+        rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="container mt-4">
+
+    <h1>Pedidos</h1>
+
+    <a
+        class="btn btn-primary mb-3"
+        th:href="@{/pedido/novo}">
+        Novo Pedido
+    </a>
+
+    <table class="table table-bordered table-striped">
+
+        <thead class="table-dark">
+
+        <tr>
+
+            <th>Cliente</th>
+
+            <th>Produtos</th>
+
+            <th>Quantidades</th>
+
+            <th>Valor Total</th>
+
+            <th>Data/Hora</th>
+
+            <th>Status</th>
+
+            <th>Ações</th>
+
+        </tr>
+
+        </thead>
+
+        <tbody>
+
+        <tr th:each="pedido : ${pedidos}">
+
+            <td th:text="${pedido.cliente.nome}">
+            </td>
+
+            <td>
+
+                <div th:each="item : ${pedido.itens}">
+
+                    <span
+                        th:text="${item.produto.nome}">
+                    </span>
+
+                </div>
+
+            </td>
+
+            <td>
+
+                <div th:each="item : ${pedido.itens}">
+
+                    <span
+                        th:text="${item.quantidade}">
+                    </span>
+
+                </div>
+
+            </td>
+
+            <td
+                th:text="${#numbers.formatDecimal(
+                    pedido.valorTotal,
+                    1,
+                    2
+                )}">
+            </td>
+
+            <td
+                th:text="${#temporals.format(
+                    pedido.dataHora,
+                    'dd/MM/yyyy HH:mm'
+                )}">
+            </td>
+
+            <td>
+
+                <span
+                    th:if="${pedido.status.name() == 'ATIVO'}"
+                    class="badge bg-success">
+                    Ativo
+                </span>
+
+                <span
+                    th:if="${pedido.status.name() == 'CANCELADO'}"
+                    class="badge bg-danger">
+                    Cancelado
+                </span>
+
+            </td>
+
+            <td>
+
+                <a
+                    th:if="${pedido.status.name() == 'ATIVO'}"
+                    class="btn btn-sm btn-warning"
+                    th:href="@{/pedido/edit/{id}
+                    (id=${pedido.id})}">
+                    Editar
+                </a>
+
+                <a
+                    th:if="${pedido.status.name() == 'ATIVO'}"
+                    class="btn btn-sm btn-danger"
+                    th:href="@{/pedido/cancelar/{id}
+                    (id=${pedido.id})}">
+                    Cancelar
+                </a>
+
+            </td>
+
+        </tr>
+
+        </tbody>
+
+    </table>
+
+</div>
+
+<script
+    th:src="@{/js/bootstrap.bundle.min.js}">
+</script>
+
+</body>
+</html>

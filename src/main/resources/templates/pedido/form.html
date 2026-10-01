@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+
+<html lang="pt-br"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Pedido</title>
+
+    <link
+        th:href="@{/css/bootstrap.min.css}"
+        rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="container mt-4">
+
+    <h1
+        th:text="${pedidoId == null}
+        ? 'Novo Pedido'
+        : 'Editar Pedido'">
+    </h1>
+
+
+    <div
+        th:if="${erro}"
+        class="alert alert-danger"
+        th:text="${erro}">
+    </div>
+
+
+    <form
+        th:object="${pedidoForm}"
+
+        th:action="${pedidoId == null}
+        ? @{/pedido/novo}
+        : @{/pedido/edit/{id}(id=${pedidoId})}"
+
+        method="post">
+
+
+        <!-- CLIENTE -->
+
+        <div class="mb-3">
+
+            <label class="form-label">
+                Cliente
+            </label>
+
+            <select
+                class="form-select"
+                th:field="*{clienteId}"
+                required>
+
+                <option value="">
+                    Selecione um cliente
+                </option>
+
+                <option
+                    th:each="cliente : ${clientes}"
+                    th:value="${cliente.id}"
+                    th:text="${cliente.nome}">
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <h4>Produtos</h4>
+
+
+        <table class="table table-bordered">
+
+            <thead class="table-dark">
+
+            <tr>
+
+                <th>Selecionar</th>
+
+                <th>Produto</th>
+
+                <th>Estoque</th>
+
+                <th>Quantidade</th>
+
+            </tr>
+
+            </thead>
+
+
+            <tbody>
+
+
+            <tr th:each="produto, stat : *{produtos}">
+
+
+                <td>
+
+                    <input
+                        type="hidden"
+                        th:field="*{produtos[__${stat.index}__].produtoId}">
+
+
+                    <input
+                        type="hidden"
+                        th:field="*{produtos[__${stat.index}__].nomeProduto}">
+
+
+                    <input
+                        type="hidden"
+                        th:field="*{produtos[__${stat.index}__].estoque}">
+
+
+                    <input
+                        type="checkbox"
+                        class="form-check-input"
+                        th:field="*{produtos[__${stat.index}__].selecionado}">
+
+                </td>
+
+
+                <td
+                    th:text="${produto.nomeProduto}">
+                </td>
+
+
+                <td
+                    th:text="${produto.estoque}">
+                </td>
+
+
+                <td>
+
+                    <input
+                        type="number"
+                        min="1"
+                        th:max="${produto.estoque}"
+                        class="form-control"
+                        th:field="*{produtos[__${stat.index}__].quantidade}">
+
+                </td>
+
+
+            </tr>
+
+
+            </tbody>
+
+        </table>
+
+
+        <div class="mb-3">
+
+            <small class="text-muted">
+
+                A data, hora, valor total e status
+                serão definidos automaticamente.
+
+            </small>
+
+        </div>
+
+
+        <button
+            type="submit"
+            class="btn btn-primary">
+
+            Salvar Pedido
+
+        </button>
+
+
+        <a
+            th:href="@{/pedido}"
+            class="btn btn-secondary">
+
+            Cancelar
+
+        </a>
+
+
+    </form>
+
+</div>
+
+</body>
+
+</html>
