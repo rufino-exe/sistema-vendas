@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import sistemaVendas.aweb.com.model.Cliente;
 import sistemaVendas.aweb.com.repository.ClienteRepository;
+import sistemaVendas.aweb.com.security.SecurityUtil;
 
 @Service
 public class ClienteService {
@@ -26,6 +27,8 @@ public class ClienteService {
     }
 
     public Cliente salvar(Cliente cliente) {
+        cliente.setCriadoPor(SecurityUtil.getCurrentUserEmail());
+        cliente.setAtualizadoPor(SecurityUtil.getCurrentUserEmail());
         return clienteRepository.save(cliente);
     }
 
@@ -36,6 +39,7 @@ public class ClienteService {
         clienteExistente.setNome(cliente.getNome());
         clienteExistente.setEmail(cliente.getEmail());
         clienteExistente.setTelefone(cliente.getTelefone());
+        clienteExistente.setAtualizadoPor(SecurityUtil.getCurrentUserEmail());
 
         return clienteRepository.save(clienteExistente);
     }

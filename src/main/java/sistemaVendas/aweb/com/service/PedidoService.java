@@ -19,6 +19,7 @@ import sistemaVendas.aweb.com.model.StatusPedido;
 import sistemaVendas.aweb.com.repository.ClienteRepository;
 import sistemaVendas.aweb.com.repository.PedidoRepository;
 import sistemaVendas.aweb.com.repository.ProdutoRepository;
+import sistemaVendas.aweb.com.security.SecurityUtil;
 
 @Service
 public class PedidoService {
@@ -119,6 +120,8 @@ public class PedidoService {
 
         pedido.setItens(itens);
         pedido.setValorTotal(total);
+        pedido.setCriadoPor(SecurityUtil.getCurrentUserEmail());
+        pedido.setAtualizadoPor(SecurityUtil.getCurrentUserEmail());
 
         pedidoRepository.save(pedido);
     }
@@ -228,6 +231,7 @@ public class PedidoService {
         }
 
         pedido.setValorTotal(total);
+        pedido.setAtualizadoPor(SecurityUtil.getCurrentUserEmail());
 
         pedidoRepository.save(pedido);
     }
@@ -257,6 +261,7 @@ public class PedidoService {
         }
 
         pedido.setStatus(StatusPedido.CANCELADO);
+        pedido.setAtualizadoPor(SecurityUtil.getCurrentUserEmail());
 
         pedidoRepository.save(pedido);
     }

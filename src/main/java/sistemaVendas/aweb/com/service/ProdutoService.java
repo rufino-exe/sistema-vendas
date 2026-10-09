@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
 import sistemaVendas.aweb.com.model.Produto;
 import sistemaVendas.aweb.com.repository.ProdutoRepository;
+import sistemaVendas.aweb.com.security.SecurityUtil;
 
 
 /**
@@ -28,6 +29,8 @@ public class ProdutoService {
     // CREATE
     @Transactional 
     public Produto salvar(Produto produto) {
+        produto.setCriadoPor(SecurityUtil.getCurrentUserEmail());
+        produto.setAtualizadoPor(SecurityUtil.getCurrentUserEmail());
         return produtoRepository.save(produto);
     }
 
@@ -53,6 +56,7 @@ public class ProdutoService {
         produtoExistente.setDescricao(produtoAtualizado.getDescricao());
         produtoExistente.setPreco(produtoAtualizado.getPreco());
         produtoExistente.setQuantidadeEmEstoque(produtoAtualizado.getQuantidadeEmEstoque());
+        produtoExistente.setAtualizadoPor(SecurityUtil.getCurrentUserEmail());
 
         var produtoSalvo = produtoRepository.save(produtoExistente);
         return produtoSalvo;

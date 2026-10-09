@@ -3,6 +3,7 @@ package sistemaVendas.aweb.com.controller;
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +27,7 @@ public class ClienteController {
         this.clienteService = clienteService;
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'GERENTE')")
     @GetMapping
     public ModelAndView list() {
         return new ModelAndView(
@@ -34,6 +36,7 @@ public class ClienteController {
         );
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'GERENTE')")
     @GetMapping("/novo")
     public ModelAndView create() {
         return new ModelAndView(
@@ -42,6 +45,7 @@ public class ClienteController {
         );
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'GERENTE')")
     @PostMapping("/novo")
     public String create(@Valid Cliente cliente, BindingResult result) {
         if (result.hasErrors()) {
@@ -53,6 +57,7 @@ public class ClienteController {
         return "redirect:/cliente";
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'GERENTE')")
     @GetMapping("/edit/{id}")
     public ModelAndView edit(@PathVariable Long id) {
         var optionalCliente = clienteService.buscarPorId(id);
@@ -67,6 +72,7 @@ public class ClienteController {
         throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'GERENTE')")
     @PostMapping("/edit/{id}")
     public String edit(
             @PathVariable Long id,
@@ -82,6 +88,7 @@ public class ClienteController {
         return "redirect:/cliente";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/delete/{id}")
 public ModelAndView deleteForm(@PathVariable Long id) {
     var optionalCliente = clienteService.buscarPorId(id);
@@ -96,6 +103,7 @@ public ModelAndView deleteForm(@PathVariable Long id) {
     throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 }
 
+@PreAuthorize("hasRole('ADMIN')")
 @PostMapping("/delete/{id}")
 public String deleteConfirm(@PathVariable Long id) {
     clienteService.excluir(id);

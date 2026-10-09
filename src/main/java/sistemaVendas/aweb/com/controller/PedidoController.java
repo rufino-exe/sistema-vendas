@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,6 +38,7 @@ public class PedidoController {
         this.produtoRepository = produtoRepository;
     }
 
+    @PreAuthorize("hasAnyRole('VENDEDOR', 'GERENTE', 'ADMIN')")
     @GetMapping
     public ModelAndView list() {
 
@@ -46,6 +48,7 @@ public class PedidoController {
         );
     }
 
+    @PreAuthorize("hasAnyRole('VENDEDOR', 'GERENTE', 'ADMIN')")
     @GetMapping("/novo")
     public ModelAndView create() {
 
@@ -60,6 +63,7 @@ public class PedidoController {
         );
     }
 
+    @PreAuthorize("hasAnyRole('VENDEDOR', 'GERENTE', 'ADMIN')")
     @PostMapping("/novo")
     public ModelAndView create(PedidoForm pedidoForm) {
 
@@ -82,6 +86,7 @@ public class PedidoController {
         }
     }
 
+    @PreAuthorize("hasAnyRole('VENDEDOR', 'GERENTE', 'ADMIN')")
     @GetMapping("/edit/{id}")
     public ModelAndView edit(@PathVariable Long id) {
 
@@ -135,6 +140,7 @@ public class PedidoController {
         );
     }
 
+    @PreAuthorize("hasAnyRole('VENDEDOR', 'GERENTE', 'ADMIN')")
     @PostMapping("/edit/{id}")
     public ModelAndView edit(
             @PathVariable Long id,
@@ -160,6 +166,7 @@ public class PedidoController {
         }
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/cancelar/{id}")
     public ModelAndView cancelarForm(@PathVariable Long id) {
 
@@ -174,6 +181,7 @@ public class PedidoController {
         );
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/cancelar/{id}")
     public String cancelar(@PathVariable Long id) {
 

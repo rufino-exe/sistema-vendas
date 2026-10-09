@@ -1,13 +1,15 @@
 package sistemaVendas.aweb.com.model;
 
-import java.math.BigDecimal;
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Entity 
 @Table (name = "produtos")
@@ -36,6 +38,20 @@ public class Produto {
     @PositiveOrZero (message = "Quantidade em estoque deve ser maior ou igual a zero")
     @Column (nullable = false)
     private Integer quantidadeEmEstoque;
+
+    @CreationTimestamp
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime criadoEm;
+
+    @UpdateTimestamp
+    @Column(nullable = false)
+    private LocalDateTime atualizadoEm;
+
+    @Column(length = 150)
+    private String criadoPor;
+
+    @Column(length = 150)
+    private String atualizadoPor;
 
     public Long getId() {
     return id;
@@ -76,5 +92,36 @@ public class Produto {
     public void setQuantidadeEmEstoque(Integer quantidadeEmEstoque) {
         this.quantidadeEmEstoque = quantidadeEmEstoque;
     }
-        
+
+    public LocalDateTime getCriadoEm() {
+        return criadoEm;
     }
+
+    public void setCriadoEm(LocalDateTime criadoEm) {
+        this.criadoEm = criadoEm;
+    }
+
+    public LocalDateTime getAtualizadoEm() {
+        return atualizadoEm;
+    }
+
+    public void setAtualizadoEm(LocalDateTime atualizadoEm) {
+        this.atualizadoEm = atualizadoEm;
+    }
+
+    public String getCriadoPor() {
+        return criadoPor;
+    }
+
+    public void setCriadoPor(String criadoPor) {
+        this.criadoPor = criadoPor;
+    }
+
+    public String getAtualizadoPor() {
+        return atualizadoPor;
+    }
+
+    public void setAtualizadoPor(String atualizadoPor) {
+        this.atualizadoPor = atualizadoPor;
+    }
+}
