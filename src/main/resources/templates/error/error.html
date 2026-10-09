@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Erro - Sistema de Vendas</title>
+    <link th:href="@{/static/css/bootstrap.min.css}" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .error-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            padding: 50px;
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+        
+        .error-code {
+            font-size: 72px;
+            font-weight: 700;
+            color: #dc3545;
+            margin-bottom: 20px;
+        }
+        
+        .error-title {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .error-message {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .error-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+        
+        .error-details {
+            background: #f8f9fa;
+            border-left: 4px solid #dc3545;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+            text-align: left;
+            font-size: 13px;
+            color: #666;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+        
+        .btn-back {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin: 0 10px;
+        }
+        
+        .btn-back:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-icon">⚠️</div>
+        
+        <div class="error-code" th:text="${status != null ? status : '500'}">500</div>
+        
+        <div class="error-title">Erro Interno do Servidor</div>
+        
+        <div class="error-message">
+            <p th:text="${message != null ? message : 'Ocorreu um erro ao processar sua requisição.'}">
+                Ocorreu um erro ao processar sua requisição.
+            </p>
+            <p>Nossa equipe foi notificada. Tente novamente mais tarde.</p>
+        </div>
+        
+        <div th:if="${error}" class="error-details" th:text="${error}">
+            <!-- Detalhes do erro -->
+        </div>
+        
+        <div>
+            <a th:href="@{/}" class="btn-back">← Voltar ao Início</a>
+            <a th:href="@{/login}" class="btn-back">🔐 Fazer Login</a>
+        </div>
+    </div>
+    
+    <script th:src="@{/static/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
