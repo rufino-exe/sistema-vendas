@@ -83,4 +83,134 @@
             border: 1px solid;
         }
         .alert-error { background: var(--danger-bg); border-color: var(--danger-border); color: var(--danger-text); }
-        .alert-ok    { background: var(--ok-bg);     border-color: var(--ok-border)};
+        .alert-ok    { background: var(--ok-bg);     border-color: var(--ok-border);     color: var(--ok-text); }
+
+        .field { margin-bottom: 18px; }
+
+        label {
+            display: block;
+            font-size: .85rem;
+            font-weight: 600;
+            color: var(--muted);
+            margin-bottom: 7px;
+        }
+
+        .input-wrap { position: relative; }
+
+        input[type="email"],
+        input[type="password"],
+        input[type="text"] {
+            width: 100%;
+            padding: 13px 14px;
+            font-size: .98rem;
+            color: var(--text);
+            background: var(--input-bg);
+            border: 1px solid var(--input-border);
+            border-radius: 10px;
+            outline: none;
+            transition: border-color .2s, box-shadow .2s;
+        }
+
+        input::placeholder { color: #4b5675; }
+
+        input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, .25);
+        }
+
+        input:-webkit-autofill {
+            -webkit-text-fill-color: var(--text);
+            -webkit-box-shadow: 0 0 0 1000px var(--input-bg) inset;
+            caret-color: var(--text);
+        }
+
+        .toggle {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--muted);
+            font-size: .8rem;
+            cursor: pointer;
+            padding: 6px;
+        }
+        .toggle:hover { color: var(--text); }
+
+        button.submit {
+            width: 100%;
+            margin-top: 6px;
+            padding: 14px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            box-shadow: 0 8px 24px rgba(99, 102, 241, .35);
+            transition: transform .15s, box-shadow .15s, filter .15s;
+        }
+        button.submit:hover { transform: translateY(-1px); filter: brightness(1.08); box-shadow: 0 12px 28px rgba(99, 102, 241, .45); }
+        button.submit:active { transform: translateY(0); }
+
+        .footer {
+            margin-top: 22px;
+            text-align: center;
+            font-size: .8rem;
+            color: #4b5675;
+        }
+    </style>
+</head>
+<body>
+
+<main class="card">
+    <div class="logo">🔐</div>
+    <h1>Sistema de Vendas</h1>
+    <p class="subtitle">Faça login para continuar</p>
+
+    <div class="alert alert-error" th:if="${param.error}">
+        <strong>Falha no login:</strong> e-mail ou senha inválidos.
+    </div>
+
+    <div class="alert alert-ok" th:if="${param.logout}">
+        Você foi desconectado com segurança.
+    </div>
+
+    <form th:action="@{/login}" method="post">
+        <div class="field">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" name="email"
+                   placeholder="seu-email@exemplo.com"
+                   autocomplete="username" required autofocus>
+        </div>
+
+        <div class="field">
+            <label for="senha">Senha</label>
+            <div class="input-wrap">
+                <input type="password" id="senha" name="senha"
+                       placeholder="Sua senha"
+                       autocomplete="current-password" required>
+                <button type="button" class="toggle" id="toggleSenha">Mostrar</button>
+            </div>
+        </div>
+
+        <button type="submit" class="submit">Entrar</button>
+    </form>
+
+    <p class="footer">Acesso restrito a usuários cadastrados</p>
+</main>
+
+<script>
+    const campo = document.getElementById('senha');
+    const botao = document.getElementById('toggleSenha');
+    botao.addEventListener('click', () => {
+        const oculto = campo.type === 'password';
+        campo.type = oculto ? 'text' : 'password';
+        botao.textContent = oculto ? 'Ocultar' : 'Mostrar';
+    });
+</script>
+
+</body>
+</html>
