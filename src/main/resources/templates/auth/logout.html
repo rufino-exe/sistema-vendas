@@ -4,8 +4,94 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Sair - Sistema de Vendas</title>
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0b0f1a;
+            --card: #121829;
+            --card-border: #222b45;
+            --text: #e8ecf5;
+            --muted: #8b95b0;
+            --accent: #6366f1;
+            --accent-2: #8b5cf6;
+            --danger: #ef4444;
+        }
+
+        body {
+            min-height: 100vh;
+            color: var(--text);
+            font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+            background:
+                radial-gradient(900px 500px at 15% 10%, rgba(99, 102, 241, .22), transparent 60%),
+                radial-gradient(800px 500px at 90% 90%, rgba(139, 92, 246, .18), transparent 60%),
+                var(--bg);
+        }
+
+        .logout-wrap {
+            display: flex;
+            justify-content: center;
+            padding: 60px 24px;
+        }
+
+        .logout-card {
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            border-radius: 18px;
+            padding: 40px 34px 34px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, .55);
+        }
+
+        .logout-icon {
+            width: 56px;
+            height: 56px;
+            margin: 0 auto 18px;
+            border-radius: 16px;
+            display: grid;
+            place-items: center;
+            font-size: 26px;
+            background: linear-gradient(135deg, var(--danger), #f97316);
+            box-shadow: 0 8px 24px rgba(239, 68, 68, .4);
+        }
+
+        .logout-card h4 {
+            font-weight: 700;
+            letter-spacing: -.3px;
+            margin-bottom: 6px;
+        }
+
+        .logout-card p {
+            color: var(--muted);
+            margin-bottom: 26px;
+        }
+
+        .btn-sair {
+            padding: 12px 22px;
+            font-weight: 600;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--danger), #f97316);
+            box-shadow: 0 8px 24px rgba(239, 68, 68, .3);
+            transition: transform .15s, filter .15s;
+        }
+        .btn-sair:hover { transform: translateY(-1px); filter: brightness(1.08); color: #fff; }
+
+        .btn-cancelar {
+            padding: 12px 22px;
+            font-weight: 600;
+            color: var(--text);
+            background: transparent;
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            transition: background .15s, border-color .15s;
+        }
+        .btn-cancelar:hover { background: #1a2340; border-color: var(--accent); color: var(--text); }
+    </style>
 </head>
 <body>
 
@@ -30,17 +116,16 @@
     <a class="btn btn-outline-light btn-sm" th:href="@{/logout}">Sair</a>
 </nav>
 
-<div class="container">
-    <div class="card mx-auto" style="max-width: 420px;">
-        <div class="card-body text-center">
-            <h4 class="card-title">Deseja sair?</h4>
-            <p class="text-muted">Sua sessão será encerrada.</p>
+<div class="logout-wrap">
+    <div class="logout-card">
+        <div class="logout-icon">🚪</div>
+        <h4>Deseja sair?</h4>
+        <p>Sua sessão será encerrada.</p>
 
-            <form th:action="@{/logout}" method="post">
-                <button type="submit" class="btn btn-danger">Confirmar saída</button>
-                <a class="btn btn-secondary" th:href="@{/}">Cancelar</a>
-            </form>
-        </div>
+        <form th:action="@{/logout}" method="post" class="d-flex gap-2 justify-content-center">
+            <button type="submit" class="btn btn-sair">Confirmar saída</button>
+            <a class="btn btn-cancelar" th:href="@{/}">Cancelar</a>
+        </form>
     </div>
 </div>
 
