@@ -9,7 +9,19 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/postgres_data
+      - postgres_data:/var/lib/postgresql/data
+
+  app:
+    build: .
+    container_name: sistema_vendas_app
+    depends_on:
+      - db
+    environment:
+      DB_URL: jdbc:postgresql://db:5432/sistema_vendas
+      DB_USER: usuario
+      DB_PASSWORD: senha123
+    ports:
+      - "8080:8080"
 
 volumes:
   postgres_data:

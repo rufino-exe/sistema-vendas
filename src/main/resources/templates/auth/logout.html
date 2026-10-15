@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-br"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Sair - Sistema de Vendas</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+
+<!-- Menu reutilizado pelas outras páginas: ~{auth/logout :: menu} -->
+<nav th:fragment="menu" class="navbar navbar-expand navbar-dark bg-dark px-3 mb-4">
+    <a class="navbar-brand" th:href="@{/}">Sistema de Vendas</a>
+
+    <ul class="navbar-nav me-auto">
+        <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+            <a class="nav-link" th:href="@{/produto}">Produtos</a>
+        </li>
+        <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+            <a class="nav-link" th:href="@{/cliente}">Clientes</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/pedido}">Pedidos</a>
+        </li>
+    </ul>
+
+    <span class="navbar-text me-3" sec:authorize="isAuthenticated()"
+          sec:authentication="name"></span>
+    <a class="btn btn-outline-light btn-sm" th:href="@{/logout}">Sair</a>
+</nav>
+
+<div class="container">
+    <div class="card mx-auto" style="max-width: 420px;">
+        <div class="card-body text-center">
+            <h4 class="card-title">Deseja sair?</h4>
+            <p class="text-muted">Sua sessão será encerrada.</p>
+
+            <form th:action="@{/logout}" method="post">
+                <button type="submit" class="btn btn-danger">Confirmar saída</button>
+                <a class="btn btn-secondary" th:href="@{/}">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
